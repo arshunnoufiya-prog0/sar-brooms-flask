@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+{% block title %}Contact Us — SAR BROOMS{% endblock %}
+
+{% block content %}
+
+<section class="hero-sar text-center" style="padding:60px 0 70px;">
+  <div class="container">
+    <span class="eyebrow" style="color:#FFE9CF;">Get In Touch</span>
+    <h1 class="mt-2">Contact SAR Brooms</h1>
+  </div>
+</section>
+
+<div class="bristle-divider text-white" aria-hidden="true">
+  <svg viewBox="0 0 1200 30" preserveAspectRatio="none"></svg>
+</div>
+
+<section class="section-pad">
+  <div class="container">
+    <div class="row g-5">
+      <div class="col-lg-5 scroll-fade">
+        <h3 class="mb-4">Reach Us Directly</h3>
+
+        <div class="contact-info-card">
+          <div class="ci-icon"><i class="bi bi-telephone-fill"></i></div>
+          <div>
+            <div class="ci-label">{{ company.contact1_label }}</div>
+            <a class="ci-value" href="tel:{{ company.contact1 }}">{{ company.contact1 }}</a>
+          </div>
+        </div>
+
+        <div class="contact-info-card">
+          <div class="ci-icon"><i class="bi bi-telephone-fill"></i></div>
+          <div>
+            <div class="ci-label">{{ company.contact2_label }}</div>
+            <a class="ci-value" href="tel:{{ company.contact2 }}">{{ company.contact2 }}</a>
+          </div>
+        </div>
+
+        <div class="contact-info-card">
+          <div class="ci-icon"><i class="bi bi-envelope-fill"></i></div>
+          <div>
+            <div class="ci-label">Email</div>
+            <a class="ci-value" href="mailto:{{ company.email }}">{{ company.email }}</a>
+          </div>
+        </div>
+
+        <div class="contact-info-card">
+          <div class="ci-icon"><i class="bi bi-geo-alt-fill"></i></div>
+          <div>
+            <div class="ci-label">Address</div>
+            <div class="ci-value" style="font-size:0.95rem;">{{ company.address }}</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-7 scroll-fade">
+        <div class="contact-form-card">
+          <h3 class="mb-2">Send Us a Message</h3>
+          <p style="color:var(--ink-soft);" class="mb-4">We'll get back to you as soon as we can.</p>
+          <form method="POST" action="{{ url_for('contact') }}">
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label class="form-label fw-semibold">Your Name</label>
+                <input type="text" name="name" class="form-control" placeholder="Full name" required>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label fw-semibold">Phone Number</label>
+                <input type="tel" name="phone" class="form-control" placeholder="Your phone number">
+              </div>
+              <div class="col-12">
+                <label class="form-label fw-semibold">Email</label>
+                <input type="email" name="email" class="form-control" placeholder="you@example.com">
+              </div>
+              <div class="col-12">
+                <label class="form-label fw-semibold">Message</label>
+                <textarea name="message" rows="4" class="form-control" placeholder="How can we help you?"></textarea>
+              </div>
+              <div class="col-12">
+                <button type="submit" class="btn btn-sar-primary w-100">
+                  <i class="bi bi-send me-2"></i>Send Message
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

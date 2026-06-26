@@ -1,0 +1,99 @@
+{% extends "admin_base.html" %}
+{% block title %}Manage Products — SAR BROOMS Admin{% endblock %}
+{% block admin_title %}Manage Products{% endblock %}
+
+{% block admin_content %}
+
+<div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4">
+  <form method="GET" action="{{ url_for('admin_products') }}" class="d-flex gap-2">
+    <input type="text" name="q" class="form-control" placeholder="Search products..." value="{{ search }}" style="min-width:240px;">
+    <button class="btn btn-sar-outline" style="border-color:var(--primary);color:var(--primary);" type="submit">
+      <i class="bi bi-search"></i>
+    </button>
+  </form>
+  <a href="{{ url_for('add_product') }}" class="btn btn-sar-primary">
+    <i class="bi bi-plus-circle me-2"></i>Add Product
+  </a>
+</div>
+
+<div class="admin-card">
+  {% if products %}
+  <div class="table-responsive">
+    <table class="table table-sar align-middle">
+      <thead>
+        <tr>
+          <th>Photo</th>
+          <th>Name</th>
+          <th>Description</th>
+          <th>Price</th>
+          <th>Unit</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for p in products %}
+        <tr>
+          <td>
+            {% if p.image %}
+              <img src="{{ p.image_url() }}" class="thumb" alt="{{ p.name }}">
+            {% else %}
+              <div class="no-thumb"><i class="bi bi-image"></i></div>
+            {% endif %}
+          </td>
+          <td><strong>{{ p.name }}</strong></td>
+          <td style="max-width:260px; font-size:0.85rem; color:var(--ink-soft);">{{ (p.description or "—")[:80] }}{% if p.description and p.description|length > 80 %}&hellip;{% endif %}</td>
+          <td class="fw-bold" style="color:var(--primary-dark);">&#8377;{{ "%.0f"|format(p.price) if p.price == p.price|int else "%.2f"|format(p.price) }}</td>
+          <td>{{ p.unit }}</td>
+          <td>
+            <div class="d-flex gap-2">
+              <a href="{{ url_for('edit_product', product_id=p.id) }}" class="btn btn-sm btn-sar-outline" style="border-color:var(--primary);color:var(--primary);">
+                <i class="bi bi-pencil"></i>
+              </a>
+              <form method="POST" action="{{ url_for('delete_product', product_id=p.id) }}" onsubmit="return confirm('Delete &quot;{{ p.name }}&quot;? This cannot be undone.');">
+                <button type="submit" class="btn btn-sm btn-sar-outline" style="border-color:#c0392b;color:#c0392b;">
+                  <i class="bi bi-trash"></i>
+                </button>
+              </form>
+            </div>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  {% if pagination.pages > 1 %}
+  <nav class="mt-4">
+    <ul class="pagination justify-content-center">
+      <li class="page-item {% if not pagination.has_prev %}disabled{% endif %}">
+        <a class="page-link" href="{{ url_for('admin_products', page=pagination.prev_num, q=search) if pagination.has_prev else '#' }}"><i class="bi bi-chevron-left"></i></a>
+      </li>
+      {% for page_num in pagination.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+        {% if page_num %}
+          <li class="page-item {% if page_num == pagination.page %}active{% endif %}">
+            <a class="page-link" href="{{ url_for('admin_products', page=page_num, q=search) }}">{{ page_num }}</a>
+          </li>
+        {% else %}
+          <li class="page-item disabled"><span class="page-link">&hellip;</span></li>
+        {% endif %}
+      {% endfor %}
+      <li class="page-item {% if not pagination.has_next %}disabled{% endif %}">
+        <a class="page-link" href="{{ url_for('admin_products', page=pagination.next_num, q=search) if pagination.has_next else '#' }}"><i class="bi bi-chevron-right"></i></a>
+      </li>
+    </ul>
+  </nav>
+  {% endif %}
+
+  {% else %}
+  <div class="empty-state-box">
+    <i class="bi bi-box-seam"></i>
+    {% if search %}
+      No products found matching "{{ search }}".
+    {% else %}
+      No products yet. <a href="{{ url_for('add_product') }}">Add your first product</a>.
+    {% endif %}
+  </div>
+  {% endif %}
+</div>
+
+{% endblock %}
