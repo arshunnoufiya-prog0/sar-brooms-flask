@@ -1,0 +1,80 @@
+{% extends "admin_base.html" %}
+{% block title %}Company Info — SAR BROOMS Admin{% endblock %}
+{% block admin_title %}Company Information{% endblock %}
+
+{% block admin_content %}
+
+<form method="POST" action="{{ url_for('company_settings') }}">
+
+  <div class="admin-card">
+    <h5>Homepage Intro</h5>
+    <div class="card-sub">This text appears in the "About SAR Brooms" section on the homepage.</div>
+    <textarea name="intro" rows="3" class="form-control">{{ company.intro }}</textarea>
+  </div>
+
+  <div class="admin-card">
+    <h5>About Us Page Content</h5>
+    <div class="card-sub">These four blocks appear on the About Us page.</div>
+
+    <div class="mb-3">
+      <label class="form-label fw-semibold">Company Story</label>
+      <textarea name="about_story" rows="3" class="form-control">{{ company.about_story }}</textarea>
+    </div>
+    <div class="mb-3">
+      <label class="form-label fw-semibold">Mission</label>
+      <textarea name="about_mission" rows="3" class="form-control">{{ company.about_mission }}</textarea>
+    </div>
+    <div class="mb-3">
+      <label class="form-label fw-semibold">Vision</label>
+      <textarea name="about_vision" rows="3" class="form-control">{{ company.about_vision }}</textarea>
+    </div>
+    <div class="mb-0">
+      <label class="form-label fw-semibold">Manufacturing Excellence</label>
+      <textarea name="about_excellence" rows="3" class="form-control">{{ company.about_excellence }}</textarea>
+    </div>
+  </div>
+
+  <div class="admin-card">
+    <h5>Contact Information</h5>
+    <div class="card-sub">These appear in the Contact page and site footer.</div>
+
+    <div class="row g-3 mb-3">
+      <div class="col-md-6">
+        <label class="form-label fw-semibold">Contact 1 — Label</label>
+        <input type="text" name="contact1_label" class="form-control" value="{{ company.contact1_label }}" placeholder="e.g. Sales">
+      </div>
+      <div class="col-md-6">
+        <label class="form-label fw-semibold">Contact 1 — Number</label>
+        <input type="text" name="contact1" class="form-control" value="{{ company.contact1 }}" placeholder="e.g. +91 98765 43210">
+      </div>
+    </div>
+
+    <div class="row g-3 mb-3">
+      <div class="col-md-6">
+        <label class="form-label fw-semibold">Contact 2 — Label</label>
+        <input type="text" name="contact2_label" class="form-control" value="{{ company.contact2_label }}" placeholder="e.g. Orders / Support">
+      </div>
+      <div class="col-md-6">
+        <label class="form-label fw-semibold">Contact 2 — Number</label>
+        <input type="text" name="contact2" class="form-control" value="{{ company.contact2 }}" placeholder="e.g. +91 91234 56789">
+      </div>
+    </div>
+
+    <div class="row g-3">
+      <div class="col-md-6">
+        <label class="form-label fw-semibold">Email</label>
+        <input type="email" name="email" class="form-control" value="{{ company.email }}">
+      </div>
+      <div class="col-md-6">
+        <label class="form-label fw-semibold">Address</label>
+        <input type="text" name="address" class="form-control" value="{{ company.address }}">
+      </div>
+    </div>
+  </div>
+
+  <button type="submit" class="btn btn-sar-primary btn-lg">
+    <i class="bi bi-check-circle me-2"></i>Save All Changes
+  </button>
+</form>
+
+{% endblock %}

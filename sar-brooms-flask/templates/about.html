@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block title %}About Us — SAR BROOMS{% endblock %}
+
+{% block content %}
+
+<section class="hero-sar text-center" style="padding:60px 0 70px;">
+  <div class="container">
+    <span class="eyebrow" style="color:#FFE9CF;">Our Journey</span>
+    <h1 class="mt-2">About SAR Brooms</h1>
+  </div>
+</section>
+
+<div class="bristle-divider text-white" aria-hidden="true">
+  <svg viewBox="0 0 1200 30" preserveAspectRatio="none"></svg>
+</div>
+
+<section class="section-pad">
+  <div class="container">
+    <div class="row g-4">
+      <div class="col-md-6 scroll-fade">
+        <div class="about-block">
+          <h4><i class="bi bi-book text-primary-custom me-2"></i>Company Story</h4>
+          <p>{{ company.about_story }}</p>
+        </div>
+      </div>
+      <div class="col-md-6 scroll-fade">
+        <div class="about-block gold">
+          <h4><i class="bi bi-bullseye text-gold me-2"></i>Our Mission</h4>
+          <p>{{ company.about_mission }}</p>
+        </div>
+      </div>
+      <div class="col-md-6 scroll-fade">
+        <div class="about-block">
+          <h4><i class="bi bi-eye text-primary-custom me-2"></i>Our Vision</h4>
+          <p>{{ company.about_vision }}</p>
+        </div>
+      </div>
+      <div class="col-md-6 scroll-fade">
+        <div class="about-block gold">
+          <h4><i class="bi bi-tools text-gold me-2"></i>Manufacturing Excellence</h4>
+          <p>{{ company.about_excellence }}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="text-center mt-5 scroll-fade">
+      <a href="{{ url_for('products') }}" class="btn btn-sar-primary btn-lg">
+        Explore Our Products <i class="bi bi-arrow-right ms-1"></i>
+      </a>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

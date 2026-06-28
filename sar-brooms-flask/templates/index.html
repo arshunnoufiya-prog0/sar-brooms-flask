@@ -1,0 +1,122 @@
+{% extends "base.html" %}
+{% block title %}SAR BROOMS — Premium Broom Manufacturing Company{% endblock %}
+
+{% block content %}
+
+<!-- HERO -->
+<section class="hero-sar text-center">
+  <div class="container">
+    <img src="{{ url_for('static', filename='images/logo.png') }}" alt="SAR Brooms logo" class="hero-logo mb-4 fade-up">
+    <h1 class="fade-up fade-up-delay-1">SAR BROOMS</h1>
+    <div class="hero-tagline fade-up fade-up-delay-2">Premium Broom Manufacturing Company</div>
+    <p class="hero-sub mx-auto fade-up fade-up-delay-2">Built for Everyday Cleaning</p>
+    <div class="mt-4 fade-up fade-up-delay-3">
+      <a href="{{ url_for('products') }}" class="btn btn-sar-outline btn-lg">
+        <i class="bi bi-grid-3x3-gap me-2"></i>View Products
+      </a>
+    </div>
+  </div>
+</section>
+
+<div class="bristle-divider text-white" aria-hidden="true">
+  <svg viewBox="0 0 1200 30" preserveAspectRatio="none"></svg>
+</div>
+
+<!-- ABOUT -->
+<section class="section-pad bg-cream">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-8 text-center scroll-fade">
+        <span class="eyebrow">Who We Are</span>
+        <h2 class="mb-3">About SAR Brooms</h2>
+        <p class="fs-5" style="color:var(--ink-soft);line-height:1.8;">{{ company.intro }}</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY CHOOSE US -->
+<section class="section-pad">
+  <div class="container">
+    <div class="section-heading scroll-fade">
+      <span class="eyebrow">Our Promise</span>
+      <h2>Why Choose Us</h2>
+    </div>
+    <div class="row g-4">
+      <div class="col-md-3 col-6 scroll-fade">
+        <div class="feature-card">
+          <div class="feature-icon"><i class="bi bi-gem"></i></div>
+          <h5>Premium Quality</h5>
+          <p>Carefully selected materials in every broom we manufacture.</p>
+        </div>
+      </div>
+      <div class="col-md-3 col-6 scroll-fade">
+        <div class="feature-card">
+          <div class="feature-icon"><i class="bi bi-shield-check"></i></div>
+          <h5>Strong &amp; Durable</h5>
+          <p>Built to withstand daily use without wearing out quickly.</p>
+        </div>
+      </div>
+      <div class="col-md-3 col-6 scroll-fade">
+        <div class="feature-card">
+          <div class="feature-icon"><i class="bi bi-feather"></i></div>
+          <h5>Lightweight</h5>
+          <p>Easy to handle for comfortable, effortless cleaning.</p>
+        </div>
+      </div>
+      <div class="col-md-3 col-6 scroll-fade">
+        <div class="feature-card">
+          <div class="feature-icon"><i class="bi bi-award"></i></div>
+          <h5>Trusted Manufacturer</h5>
+          <p>Years of experience serving homes and businesses alike.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="bristle-divider" style="color:var(--gold);" aria-hidden="true">
+  <svg viewBox="0 0 1200 30" preserveAspectRatio="none"></svg>
+</div>
+
+<!-- FEATURED PRODUCTS -->
+<section class="section-pad bg-cream">
+  <div class="container">
+    <div class="section-heading scroll-fade">
+      <span class="eyebrow">Catalogue</span>
+      <h2>Featured Products</h2>
+    </div>
+
+    {% if products %}
+    <div class="row g-4">
+      {% for p in products %}
+      <div class="col-lg-4 col-md-6 scroll-fade">
+        <div class="product-card">
+          <div class="product-img-wrap">
+            <img src="{{ p.image_url() }}" alt="{{ p.name }}">
+          </div>
+          <div class="card-body">
+            <div class="product-name">{{ p.name }}</div>
+            <div class="product-desc">{{ p.description or "" }}</div>
+            <div class="product-price-row">
+              <div class="price">&#8377;{{ "%.0f"|format(p.price) if p.price == p.price|int else "%.2f"|format(p.price) }}</div>
+              <div class="unit">{{ p.unit }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    <div class="text-center mt-5 scroll-fade">
+      <a href="{{ url_for('products') }}" class="btn btn-sar-primary">View All Products <i class="bi bi-arrow-right ms-1"></i></a>
+    </div>
+    {% else %}
+    <div class="empty-state-box scroll-fade">
+      <i class="bi bi-box-seam"></i>
+      No products added yet. Check back soon!
+    </div>
+    {% endif %}
+  </div>
+</section>
+
+{% endblock %}

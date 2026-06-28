@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+{% block title %}Our Products — SAR BROOMS{% endblock %}
+
+{% block content %}
+
+<section class="section-pad bg-cream" style="padding-top:50px;">
+  <div class="container">
+    <div class="section-heading scroll-fade">
+      <span class="eyebrow">Catalogue</span>
+      <h2>Our Products</h2>
+    </div>
+
+    <form method="GET" action="{{ url_for('products') }}" class="search-bar-wrap scroll-fade">
+      <div class="input-group">
+        <input type="text" name="q" class="form-control" placeholder="Search for a broom..." value="{{ search }}">
+        <button class="btn" type="submit"><i class="bi bi-search"></i></button>
+      </div>
+    </form>
+
+    {% if search %}
+      <p class="text-center mb-4" style="color:var(--ink-soft);">
+        Showing results for "<strong>{{ search }}</strong>" —
+        <a href="{{ url_for('products') }}">clear search</a>
+      </p>
+    {% endif %}
+
+    {% if products %}
+    <div class="row g-4">
+      {% for p in products %}
+      <div class="col-lg-4 col-md-6 scroll-fade">
+        <div class="product-card">
+          <div class="product-img-wrap">
+            <img src="{{ p.image_url() }}" alt="{{ p.name }}">
+          </div>
+          <div class="card-body">
+            <div class="product-name">{{ p.name }}</div>
+            <div class="product-desc">{{ p.description or "" }}</div>
+            <div class="product-price-row">
+              <div class="price">&#8377;{{ "%.0f"|format(p.price) if p.price == p.price|int else "%.2f"|format(p.price) }}</div>
+              <div class="unit">{{ p.unit }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+    {% if pagination.pages > 1 %}
+    <nav class="mt-5">
+      <ul class="pagination justify-content-center">
+        <li class="page-item {% if not pagination.has_prev %}disabled{% endif %}">
+          <a class="page-link" href="{{ url_for('products', page=pagination.prev_num, q=search) if pagination.has_prev else '#' }}">
+            <i class="bi bi-chevron-left"></i>
+          </a>
+        </li>
+        {% for page_num in pagination.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+          {% if page_num %}
+            <li class="page-item {% if page_num == pagination.page %}active{% endif %}">
+              <a class="page-link" href="{{ url_for('products', page=page_num, q=search) }}">{{ page_num }}</a>
+            </li>
+          {% else %}
+            <li class="page-item disabled"><span class="page-link">&hellip;</span></li>
+          {% endif %}
+        {% endfor %}
+        <li class="page-item {% if not pagination.has_next %}disabled{% endif %}">
+          <a class="page-link" href="{{ url_for('products', page=pagination.next_num, q=search) if pagination.has_next else '#' }}">
+            <i class="bi bi-chevron-right"></i>
+          </a>
+        </li>
+      </ul>
+    </nav>
+    {% endif %}
+
+    {% else %}
+    <div class="empty-state-box scroll-fade">
+      <i class="bi bi-search"></i>
+      {% if search %}
+        No products found matching "{{ search }}".
+      {% else %}
+        No products added yet. Check back soon!
+      {% endif %}
+    </div>
+    {% endif %}
+  </div>
+</section>
+
+{% endblock %}
